@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils.dateparse import parse_datetime
 # Create your models here.
 class Objectif(models.Model):
 
@@ -21,8 +21,14 @@ class Vendeur(models.Model):
         return f'{self.nom} '
     
     
-    def Chiffre(self):
-        charges=self.charges.all()
+    def Chiffre(self,date1=None,date2=None):
+        if date1 and date2:
+            date_from = parse_datetime(date1)
+            date_au = parse_datetime(date2)
+            charges=self.charges.filter(date__range=(date_from, date_au))
+            
+        else:
+            charges=self.charges.all()
         chiffre=0
         for ligne in charges:
             
@@ -30,8 +36,12 @@ class Vendeur(models.Model):
         return chiffre
     
     
-    def Arba7(self):
+    def Arba7(self,date1=None,date2=None):
         charges=self.charges.all()
+        if date1 and date2:
+            date_from = parse_datetime(date1)
+            date_au = parse_datetime(date2)
+            charges=self.charges.filter(date__range=(date_from, date_au))
         gant=0
         for ligne in charges:
             
@@ -39,8 +49,12 @@ class Vendeur(models.Model):
         return gant
     
     
-    def Gasoil(self):
+    def Gasoil(self,date1=None,date2=None):
         gasoils=self.gasoils.all()
+        if date1 and date2:
+            date_from = parse_datetime(date1)
+            date_au = parse_datetime(date2)
+            gasoils=self.gasoils.filter(date__range=(date_from, date_au))
         total=0
         for ligne in gasoils:
             total=total+ligne.montant            

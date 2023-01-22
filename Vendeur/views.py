@@ -18,6 +18,8 @@ def index(request):
     essence_charges_mois=0
     dynamique_mois=0
     days=0
+    #vendeurs=Vendeur.objects.all()
+    
     
     if request.method =='POST' :
         form = StatiqueForm(request.POST)
@@ -25,10 +27,9 @@ def index(request):
             print("------validate Post-----------")
             date_from = parse_datetime(request.POST['du'])
             date_au = parse_datetime(request.POST['au'])
-            print(type(date_from))
-            print(date_from.month)
-            print(date_from.day)
-            print(date_from.year)
+            for v in Vendeur.objects.all():
+                print( f"Arba7 {v} {v.Arba7(request.POST['du'],request.POST['au'])} ")
+
 
 
             for one_chage in Charge.objects.filter(date__range=(date_from, date_au)):
@@ -99,6 +100,8 @@ def index(request):
               "statique_mois":statique,
               "dynamique_mois":dynamique_mois,
               "days":days,
+              "vendeurs":Vendeur.objects.all(),
+              
              
              
         

@@ -9,6 +9,7 @@
 
 <hr><hr>
 <div class="container" >
+  <div style="margin-top: 30px;"> 
   <form class="form-inline" method="post">
     {% csrf_token %}
     <div class="form-group mb-2">
@@ -27,16 +28,8 @@
     </div>
    
   </form>
-  {% if form.errors %}
-  {% for field in form %}
-  {% for error in field.errors %}
-      <p> {{ errors }} </p>
-  {% endfor %}
-  {% endfor %}
-  {% for error in form.non_field_errors %}
-  <p> {{ error }} </p>
-  {% endfor %}
-{% endif %}
+</div>
+
 
     <div class="panel panel-primary" >
       <div class="panel-heading" style="text-align:center;">
@@ -49,38 +42,61 @@
             <th> مصاريف متغيرة </th>
             <th>بنزين شهر</th>
             <th>  مبيعات شهر</th>
-            <th>ارباح شهر</th>
-           
+            <th>ارباح شهر</th>  
             <th>عدد الايام</th>
-
           </tr>
         </thead>
-       
-        <tr>
-         
+        <tr>  
           <td> {{statique_mois}}</td>
           <td> {{dynamique_mois}}</td>
-          
           <td>{{essence_charges_mois}}</td>
-          
-
-       
-
           <td> {{chiffre_charges_mois}}</td>
           <td>{{benifice_charges_mois}}</td>
-          <td>{{days}}</td>
-          
-        
+          <td>{{days}}</td>  
         </tr>
-       
-
-
-
-
-
       </table>
 
   </div>
+
+
+  <div class="panel panel-primary" >
+    <div class="panel-heading" style="text-align:center;">
+      <h6 class="panel-title">تقارير الباعة</h6>
+    </div>
+    <table class="table table-hover" id="dev-table">
+      <thead>
+        <tr>
+         
+          <th> الارباح</th>
+          <th> رقم المعاملات</th>
+          <th> البنزين  </th>  
+          <th> الاسم </th>
+        </tr>
+      </thead>
+      {% for v in vendeurs %}
+
+      <tr>  
+        <td> {{v.Arba7}}</td>
+        <td> {{v.Chiffre}}</td>
+        <td> {{v.Gasoil}}</td>
+        <td> {{v}}</td>
+
+
+      </tr>
+      {% endfor %}
+    
+    </table>
+
+</div>
+  {% if request.method == "POST" %}
+  <!-- Do something for POST requests -->
+  POST
+  {{ request.POST.du }}
+{% else %}
+  <!-- Do something for GET requests -->
+  GET
+{% endif %}
+  
 </div>
 
 
